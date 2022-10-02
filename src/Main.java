@@ -5,10 +5,13 @@ import java.awt.event.*;
 import javax.swing.*;
 public class Main extends JFrame implements ActionListener {
 
-    private JButton no0,no1,no2,no3,no4,no5,no6,no7,no8,no9,dot,
-                            plus, minus, times, divide, equals,
+    private JButton dot,plus, minus, times, divide, equals,
                             backspace,clear;
+    private JButton[] buttons=new JButton[10];
+    JPanel numberPanel;
     private JTextField result, answer;
+
+
     public static void main(String[] args) {
 	Main frame=new Main();
     frame.setSize(400,400);
@@ -23,46 +26,18 @@ public class Main extends JFrame implements ActionListener {
         Container window=getContentPane();
         window.setLayout(new FlowLayout());
 
-        no0=new JButton("0");
-        window.add(no0);
-        no0.addActionListener(this);
+        numberPanel=new JPanel();
+        numberPanel.setBackground(Color.blue);
+        numberPanel.setBounds(50,50,300,300);
+        numberPanel.setLayout(new GridLayout(4,4,10,10));
+        numberPanel.setBackground(Color.gray);
 
-        no1=new JButton("1");
-        window.add(no1);
-        no1.addActionListener(this);
-
-        no2=new JButton("2");
-        window.add(no2);
-        no2.addActionListener(this);
-
-        no3=new JButton("3");
-        window.add(no3);
-        no3.addActionListener(this);
-
-        no4=new JButton("4");
-        window.add(no4);
-        no4.addActionListener(this);
-
-        no5=new JButton("5");
-        window.add(no5);
-        no5.addActionListener(this);
-
-        no6=new JButton("6");
-        window.add(no6);
-        no6.addActionListener(this);
-
-        no7=new JButton("7");
-        window.add(no7);
-        no7.addActionListener(this);
-
-        no8=new JButton("8");
-        window.add(no8);
-        no8.addActionListener(this);
-
-        no9=new JButton("9");
-        window.add(no9);
-        no9.addActionListener(this);
-
+        for (int i=0;i<buttons.length;i++){
+            buttons[i]=new JButton(Integer.toString(i));
+            numberPanel.add(buttons[i]);
+            buttons[i].addActionListener(this);
+        }
+        window.add(numberPanel);
         dot=new JButton(".");
         window.add(dot);
         dot.addActionListener(this);
@@ -112,35 +87,11 @@ public class Main extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
 
-        if (source.equals(no1)) {
-            result.setText(result.getText() + "1");
-        }
-        if (source.equals(no2)) {
-            result.setText(result.getText() + "2");
-        }
-        if (source.equals(no3)) {
-            result.setText(result.getText() + "3");
-        }
-        if (source.equals(no4)) {
-            result.setText(result.getText() + "4");
-        }
-        if (source.equals(no5)) {
-            result.setText(result.getText() + "5");
-        }
-        if (source.equals(no6)) {
-            result.setText(result.getText() + "6");
-        }
-        if (source.equals(no7)) {
-            result.setText(result.getText() + "7");
-        }
-        if (source.equals(no8)) {
-            result.setText(result.getText() + "8");
-        }
-        if (source.equals(no9)) {
-            result.setText(result.getText() + "9");
-        }
-        if (source.equals(no0)) {
-            result.setText(result.getText() + "0");
+        for (int i=0; i<10;i++){
+            if (source.equals(buttons[i])){
+                result.setText(result.getText()+String.valueOf(i));
+            }
+
         }
         if(source.equals(dot)) {
             result.setText(result.getText() + ".");
@@ -160,6 +111,7 @@ public class Main extends JFrame implements ActionListener {
         }
         if (source.equals(clear)){
             result.setText("");
+            answer.setText("");
         }
         if (source.equals(backspace)){
             backSpaceM();
@@ -177,6 +129,7 @@ public class Main extends JFrame implements ActionListener {
         }else{
             a=a.substring(0,a.length()-1);
         }
+        answer.setText("");
         result.setText(a);
  }
     private double calculateDM() {// does multiplication and division
