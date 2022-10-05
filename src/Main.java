@@ -8,7 +8,7 @@ public class Main extends JFrame implements ActionListener {
     private JButton dot,plus, minus, times, divide, equals,
                             backspace,clear;
     private JButton[] buttons=new JButton[10];
-    JPanel numberPanel;
+    JPanel numberPanel,symbolPanel;
     private JTextField result, answer;
 
 
@@ -32,35 +32,46 @@ public class Main extends JFrame implements ActionListener {
         numberPanel.setLayout(new GridLayout(4,4,10,10));
         numberPanel.setBackground(Color.gray);
 
+
         for (int i=0;i<buttons.length;i++){
             buttons[i]=new JButton(Integer.toString(i));
             numberPanel.add(buttons[i]);
             buttons[i].addActionListener(this);
         }
-        window.add(numberPanel);
+
         dot=new JButton(".");
-        window.add(dot);
+        numberPanel.add(dot);
         dot.addActionListener(this);
 
+        equals=new JButton("=");
+        numberPanel.add(equals);
+        equals.addActionListener(this);
+
+        window.add(numberPanel);
+
+        symbolPanel=new JPanel();
+        symbolPanel.setBackground(Color.blue);
+        numberPanel.setBounds(50,50,300,300);
+        symbolPanel.setLayout(new GridLayout(4,1,10,10));
+        symbolPanel.setBackground(Color.gray);
+
         plus=new JButton("+");
-        window.add(plus);
+        symbolPanel.add(plus);
         plus.addActionListener(this);
 
         minus=new JButton("-");
-        window.add(minus);
+        symbolPanel.add(minus);
         minus.addActionListener(this);
 
         times=new JButton("*");
-        window.add(times);
+        symbolPanel.add(times);
         times.addActionListener(this);
 
         divide=new JButton("/");
-        window.add(divide);
+        symbolPanel.add(divide);
         divide.addActionListener(this);
 
-        equals=new JButton("=");
-        window.add(equals);
-        equals.addActionListener(this);
+        window.add(symbolPanel);
 
         backspace=new JButton("backspace");
         window.add(backspace);
