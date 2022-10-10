@@ -125,13 +125,14 @@ public class Main extends JFrame implements ActionListener {
             answer.setText("");
         }
         if (source.equals(backspace)){
-            backSpaceM();
+            backSpace();
         }
         if (source.equals(equals)){
-            answer.setText(String.valueOf(calculateDM()));
+            Calculate cal=new Calculate(result.getText());
+            answer.setText(String.valueOf(cal.getAnswer()));
         }
 }
-    private void backSpaceM(){     //deletes last character of result
+    private void backSpace(){     //deletes last character of result
         String a=result.getText();
         if (a.length()==0){
             return;
@@ -143,78 +144,4 @@ public class Main extends JFrame implements ActionListener {
         answer.setText("");
         result.setText(a);
  }
-    private double calculateDM() {// does multiplication and division
-        String equation = result.getText();
-        String[] part=equation.split(" ");
-        int count=countDM(part);
-        while (count!=0){
-            count--;
-            for (int i=0; i<part.length;i++){
-                if (part[i].equals("*")){
-                    part[i]= String.valueOf(Double.parseDouble(part[i-1]) * Double.parseDouble(part[i+1]));
-                    part[i+1]="";
-                    part[i-1]="";
-                }else if (part[i].equals("/")){
-                    part[i]= String.valueOf(Double.parseDouble(part[i-1]) / Double.parseDouble(part[i+1]));
-                    part[i+1]="";
-                    part[i-1]="";
-                }
-            part=simpleArray(part);
-            }
-        }
-        return calculateAS(part);
-    }
-    private int countDM(String[] equation){//checks how many times and divide operators are in the equation
-        int count=0;
-        for (String operator:equation){
-            if (operator.equals("*") || operator.equals("/")){
-                count+=1;
-            }
-        }
-        return count;
-    }
-
-    private String[] simpleArray(String[] part){//removes empty spaces from array
-        int empty=0;
-         for (int i=0;i<part.length;i++){
-            if (part[i].equals("")){
-                empty++;
-            }
-        }// need to know amount of empty spaces in order to create array of desired space
-
-        String[] newPart=new String[part.length-empty];
-        int count=0;
-        for (int i=0;i<part.length;i++){
-            if (!part[i].equals("")){
-                newPart[count]=part[i];
-                count++;
-            }
-        }
-        return newPart;
-    }
-    private double calculateAS(String[] part){// does the + and - operations in the array
-        double total=Double.parseDouble(part[0]);
-        double tempNo;
-        String operator="";
-        for(int i=1;i<part.length;i++){
-            if(isDouble(part[i])){
-                tempNo=Double.parseDouble(part[i]);
-                if (operator.equals("+")){total+=tempNo;}
-                else{
-                    total-=tempNo;
-                }
-            }else{
-                operator=part[i];
-            }
-        }
-        return total;
-    }
-    public boolean isDouble(String obj){//double checks if the string is a double
-        try{
-            Double.valueOf(obj);
-        }catch(Exception ex){
-            return false;
-        }
-        return true;
-    }
 }
